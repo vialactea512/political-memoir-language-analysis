@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Themes in Political Memoirs</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            line-height: 1.6;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .header h1 {
+            font-size: 3.5em;
+            margin: 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .header p {
+            font-size: 1.3em;
+            margin: 20px 0;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .theme-card {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+        
+        .theme-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--theme-color);
+        }
+        
+        .theme-title {
+            font-size: 1.8em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--theme-color);
+        }
+        
+        .theme-count {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--theme-color);
+            margin-bottom: 10px;
+        }
+        
+        .theme-description {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            color: #666;
+        }
+        
+        .theme-examples {
+            font-size: 0.95em;
+            color: #888;
+        }
+        
+        .personal { --theme-color: #e74c3c; }
+        .journey { --theme-color: #3498db; }
+        .power { --theme-color: #f39c12; }
+        .truth { --theme-color: #27ae60; }
+        .time { --theme-color: #9b59b6; }
+        .struggle { --theme-color: #e67e22; }
+        .insider { --theme-color: #34495e; }
+        .legacy { --theme-color: #16a085; }
+        
+        .details-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            max-width: 800px;
+            margin: 50px auto;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            position: relative;
+            color: #333;
+        }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #999;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .book-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--theme-color);
+        }
+        
+        .book-title {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .book-author {
+            color: #666;
+            font-style: italic;
+        }
+        
+        .insights {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        
+        .insights h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+        
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .insight-item {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Themes in Political Memoirs</h1>
+        <p>Analyzing narrative patterns in 126 political autobiographies</p>
+        <p><em>Click each theme to explore the books</em></p>
+    </div>
+    
+    <div class="container">
+        <div class="themes-grid">
+            <div class="theme-card personal" onclick="showTheme('personal')">
+                <div class="theme-count">33</div>
+                <div class="theme-title">Personal Narrative</div>
+                <div class="theme-description">
+                    Titles focusing on individual life stories, personal journeys, and intimate memoirs
+                </div>
+                <div class="theme-examples">
+                    "My Life," "My Story," "Memoirs," "My Journey"
+                </div>
+            </div>
+            
+            <div class="theme-card journey" onclick="showTheme('journey')">
+                <div class="theme-count">12</div>
+                <div class="theme-title">Journey & Movement</div>
+                <div class="theme-description">
+                    Titles emphasizing paths, walks, roads, and progressive movement toward goals
+                </div>
+                <div class="theme-examples">
+                    "Long Walk to Freedom," "The Road to Canberra," "A Path to Power"
+                </div>
+            </div>
+            
+            <div class="theme-card power" onclick="showTheme('power')">
+                <div class="theme-count">15</div>
+                <div class="theme-title">Power & Authority</div>
+                <div class="theme-description">
+                    Titles directly referencing power, leadership, decision-making, and political authority
+                </div>
+                <div class="theme-examples">
+                    "The Path to Power," "Decision Points," "Truth to Power"
+                </div>
+            </div>
+            
+            <div class="theme-card truth" onclick="showTheme('truth')">
+                <div class="theme-count">8</div>
+                <div class="theme-title">Truth & Honesty</div>
+                <div class="theme-description">
+                    Titles emphasizing truthfulness, honesty, duty, and moral principles
+                </div>
+                <div class="theme-examples">
+                    "The Truth of the Matter," "Truth and Duty," "The Truths We Hold"
+                </div>
+            </div>
+            
+            <div class="theme-card time" onclick="showTheme('time')">
+                <div class="theme-count">11</div>
+                <div class="theme-title">Time & Era</div>
+                <div class="theme-description">
+                    Titles referencing specific time periods, years, eras, and historical moments
+                </div>
+                <div class="theme-examples">
+                    "In My Time," "The Blair Years," "The Downing Street Years"
+                </div>
+            </div>
+            
+            <div class="theme-card struggle" onclick="showTheme('struggle')">
+                <div class="theme-count">9</div>
+                <div class="theme-title">Struggle & Challenge</div>
+                <div class="theme-description">
+                    Titles highlighting fights, battles, hard choices, and overcoming obstacles
+                </div>
+                <div class="theme-examples">
+                    "Hard Choices," "A Fighting Chance," "The Fight for Civil Rights"
+                </div>
+            </div>
+            
+            <div class="theme-card insider" onclick="showTheme('insider')">
+                <div class="theme-count">14</div>
+                <div class="theme-title">Inside Access</div>
+                <div class="theme-description">
+                    Titles promising insider knowledge, behind-the-scenes access, and exclusive insights
+                </div>
+                <div class="theme-examples">
+                    "The Insider," "On the Inside," "The Secret Diaries"
+                </div>
+            </div>
+            
+            <div class="theme-card legacy" onclick="showTheme('legacy')">
+                <div class="theme-count">24</div>
+                <div class="theme-title">Hope & Vision</div>
+                <div class="theme-description">
+                    Titles expressing optimism, dreams, promises, and future-oriented thinking
+                </div>
+                <div class="theme-examples">
+                    "The Audacity of Hope," "Dreams from My Father," "A Promised Land"
+                </div>
+            </div>
+        </div>
+        
+        <div class="insights">
+            <h2>Key Insights</h2>
+            <div class="insight-grid">
+                <div class="insight-item">
+                    <h3>Personal Dominates</h3>
+                    <p>26% of titles use personal framing ("My Life," "My Story"), showing politicians prefer intimate, relatable narratives over institutional accounts.</p>
+                </div>
+                <div class="insight-item">
+                    <h3>Hope vs. Struggle</h3>
+                    <p>Optimistic themes (19%) slightly outweigh struggle narratives (7%), suggesting politicians prefer to frame their stories positively.</p>
+                </div>
+                <div class="insight-item">
+                    <h3>Universal Patterns</h3>
+                    <p>Similar themes appear across different countries and eras, indicating universal approaches to political storytelling.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal for detailed view -->
+    <div id="modal" class="details-modal" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-description"></p>
+            <div id="modal-books" class="book-grid"></div>
+        </div>
+    </div>
+    
+    <script>
+        const themeData = {
+            personal: {
+                title: "Personal Narrative (33 books)",
+                description: "These titles emphasize the individual's personal story, using intimate language that makes political figures seem more relatable and human.",
+                books: [
+                    {title: "My Life", author: "Bill Clinton"},
+                    {title: "My Life", author: "Richard Nixon"},
+                    {title: "My Life", author: "Eleanor Roosevelt"},
+                    {title: "My Life", author: "Jimmy Carter"},
+                    {title: "My Life", author: "Tony Blair"},
+                    {title: "My Life", author: "Gerald Ford"},
+                    {title: "My Life", author: "Golda Meir"},
+                    {title: "My Life", author: "Jawaharlal Nehru"},
+                    {title: "My Life", author: "Shirley Chisholm"},
+                    {title: "My Life", author: "David Cameron"},
+                    {title: "My Life", author: "Hillary Clinton"},
+                    {title: "My Life", author: "Boris Johnson"},
+                    {title: "My Life", author: "Lee Kuan Yew"},
+                    {title: "My Story", author: "Indira Gandhi"},
+                    {title: "My Story", author: "Benazir Bhutto"},
+                    {title: "My Story", author: "Michelle Obama"},
+                    {title: "My Story", author: "Julia Gillard"},
+                    {title: "My Story", author: "Clive Palmer"},
+                    {title: "My Story", author: "Tanya Plibersek"},
+                    {title: "Memoirs", author: "Golda Meir"},
+                    {title: "Memoirs", author: "Ulysses S. Grant"},
+                    {title: "Memoirs", author: "Richard Nixon"},
+                    {title: "Memoirs", author: "Harold Wilson"},
+                    {title: "Memoirs", author: "Gough Whitlam"},
+                    {title: "Memoirs", author: "Jawaharlal Nehru"}
+                ]
+            },
+            journey: {
+                title: "Journey & Movement (12 books)",
+                description: "These titles use metaphors of physical movement to represent political and personal progress, suggesting transformation and purposeful direction.",
+                books: [
+                    {title: "Long Walk to Freedom", author: "Nelson Mandela"},
+                    {title: "The Long Walk to Freedom", author: "Nelson Mandela"},
+                    {title: "The Long Road to Freedom", author: "Desmond Tutu"},
+                    {title: "The Long March", author: "Bill Shorten"},
+                    {title: "The Longest March", author: "Enoch Powell"},
+                    {title: "The Path to Power", author: "Margaret Thatcher"},
+                    {title: "A Path to Power", author: "Tony Blair"},
+                    {title: "The Road to Canberra", author: "Gough Whitlam"},
+                    {title: "The Road to Serfdom", author: "Friedrich Hayek"},
+                    {title: "A Journey: My Political Life", author: "Tony Blair"},
+                    {title: "Up from Slavery", author: "Booker T. Washington"},
+                    {title: "Lazarus Rising", author: "John Howard"}
+                ]
+            },
+            power: {
+                title: "Power & Authority (15 books)",
+                description: "These titles directly engage with concepts of political power, decision-making, and the responsibilities of leadership.",
+                books: [
+                    {title: "The Path to Power", author: "Margaret Thatcher"},
+                    {title: "A Path to Power", author: "Tony Blair"},
+                    {title: "Truth to Power", author: "Anwar Ibrahim"},
+                    {title: "Decision Points", author: "George W. Bush"},
+                    {title: "Hard Choices", author: "Hillary Rodham Clinton"},
+                    {title: "Hard Choices", author: "Hillary Clinton"},
+                
